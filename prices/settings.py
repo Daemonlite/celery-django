@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'btc'
+    'btc',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -90,13 +91,11 @@ REDIS = redis.Redis(host="localhost", port=6379, db=0)
 # settings.py
 
 # Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+# Celery configuration
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
 CELERY_TIMEZONE = 'UTC'
-
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 # Celery Beat configuration for scheduling tasks
 CELERY_BEAT_SCHEDULE = {
       'add-every-30-seconds': {
