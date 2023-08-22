@@ -87,6 +87,27 @@ DATABASES = {
 import redis
 REDIS = redis.Redis(host="localhost", port=6379, db=0)
 
+# settings.py
+
+# Celery configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# Celery Beat configuration for scheduling tasks
+CELERY_BEAT_SCHEDULE = {
+      'add-every-30-seconds': {
+        'task': 'btc.tasks.fetch_btc_price',
+        'schedule': 30.0,
+        'options': {
+            'expires': 15.0,
+        },
+    },
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
