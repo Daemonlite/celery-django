@@ -101,7 +101,7 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
       'add-every-30-seconds': {
         'task': 'btc.tasks.fetch_btc_price',
-        'schedule': 30.0,
+        'schedule': 80.0,
         'options': {
             'expires': 15.0,
         },
